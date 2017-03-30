@@ -1,6 +1,17 @@
 **/.idea
 **/.gradle
 **/build
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
 
 *.class
 *.jar
@@ -9,12 +20,11 @@
 /.idea
 /.iml
 
+# Locally stored "Eclipse launch configurations"
+*.launch
+
 # misc
-/.sass-cache
-/connect.lock
-/coverage/*
-/libpeerconnection.log
-/typings
+.gitignore~
 
 # e2e
 /e2e/*.js
