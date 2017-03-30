@@ -1,0 +1,24 @@
+**/.idea
+**/.gradle
+**/build
+
+*.class
+*.jar
+
+# IDEs and editors
+/.idea
+/.iml
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage/*
+/libpeerconnection.log
+/typings
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+# Windows System Files
+.DS_Store
