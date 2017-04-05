@@ -32,3 +32,8 @@ local.properties
 
 # Windows System Files
 .DS_Store
+
+# LaTeX Auxilary Files
+*.log
+*.aux
+*.synctex.gz
