@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
         strcpy(input, argv[1]);
         printf("Name der neuen Datei: %s\n", input);
     } else {
-        printf("Name der neuen Datei:\n");
+        printf("Name der neuen Datei: ");
         fgets(input, 31, stdin);
         // remove the newline at the end of input:
         input[strlen(input) - 1] = '\0';
@@ -32,7 +32,9 @@ int main(int argc, char *argv[]) {
 
     // taken from creat's manpage:
     mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
+    //TODO: implement 0700-user access
     fd = creat(input, mode);
+    printf("Die Datei %s wurde erfolgreich angelegt!\n", input);
     close(fd);
     return fd;
 }
