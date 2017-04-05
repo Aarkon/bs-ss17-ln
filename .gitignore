@@ -36,6 +36,7 @@ local.properties
 # LaTeX Auxilary Files
 *.log
 *.aux
-*.synctex.gz
+**.synctex.gz
+*.gz
 
 *.c~

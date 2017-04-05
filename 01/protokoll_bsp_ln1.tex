@@ -1,46 +1,59 @@
-\documentclass[]{article}
-%\usepackage{inputenc}[utf8]
+\documentclass[]{scrartcl}
+\usepackage[utf8]{inputenc}
 \usepackage{ngerman}
+\usepackage{listings}
+%\lstset{basicstyle=\ttfamily,
+%	showstringspaces=false,
+%	commentstyle=\color{red},
+%	keywordstyle=\color{blue}
+%}
 
 %opening
-\title{Betriebssystem Praktikum 1}
+\title{Betriebssysteme Praktikum 1}
 \author{Florina Nehmer\\
 Jakob Ledig}
 
+
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
 \begin{document}
 
 \maketitle
 
 \section{Bash}
+
 \subsection{„Erste Erfahrungen mit der Bash“}
+Hier folgt ein kleiner Abriss über die wichtigen Kommandos
 
 \subsection{Fragen beantworten}
-\subsubsection{Variablen}
+\subsubsection*{Variablen}
 \paragraph{\$HOME}: Link aufs Homeverzeichnis des aktuell eingelogten Users.
 \paragraph{\$PATH}: In den hier vorgehaltenen Pfaden abgelegte (Binär-)dateien werden ausgeführt, wenn ihre Name in der Bash aufgerufen wird.
 \paragraph{\$UID}: Gibt die ID des aufrufenden Users aus. Wird beginnend mit 1000 numerisch fortlaufend vergeben.
 \paragraph{\$USER}: Name des aufrufenden Users.
 
-\subsubsection{\$HOME}
-Der Befehl wechselt ins Homeverzeichnis des Users. Kürzer ist cd ~.
+\subsubsection*{\$HOME}
+Der Befehl wechselt ins Homeverzeichnis des Users. Kürzer ist:
+\begin{lstlisting}[language=bash]
+	cd ~
+\end{lstlisting} .
 
-\subsubsection{}
+\subsubsection*{Pfeilasten und STRG + D}
 $\uparrow$ geht in der Befehlshistorie rückwärts, $\downarrow$ vorwärts. STRG + D schließt das Terminal und beendet die Sitzung.
 
-\subsubsection{.bashrc}
+\subsubsection*{.bashrc}
 bashrc ist ein Shellscript, dessen Inhalt beim Öffnen eines Terminalfensters ausgeführt wird.
 
 \section{Bash-Script}
 \subsection{frename.sh}
 Siehe Quellcode
 
-\subsection{try_host.sh}
+\subsection{try\_host.sh}
 Siehe Quellcode
 
-\subsection{Ausführbarmachen}
-(sudo) chmod +x \$Dateiname, danach ist das Skript ausführbar.
+\subsection{ausführbar machen}
+chmod\footnote{Als root auszuführen, d.h. je nach Distribution entweder als Benutzer root oder mit vorangestelltem „sudo“.} +x \$Dateiname, danach ist das Skript ausführbar.
 
 \subsubsection{\$PATH erweitern}
-Man könnte in .bashrc 
+Kein Plan was gemeint ist, nachfragen!
 
 \end{document}
