@@ -40,3 +40,9 @@ local.properties
 *.gz
 
 *.c~
+
+01/cmake-build-debug/CMakeFiles/
+
+CMakeLists\.txt
+
+cmake-build-debug/

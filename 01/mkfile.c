@@ -1,24 +1,38 @@
-/* authors: Jakob Ledig & Florian Nehmer */
-/* Praktikum Betriebssysteme Sommersemester 2017 */
-/* Praktiumsgruppe 4 */
-/* Aufgabe 1 */
+/*
+ * A C-program that takes an optional parameter or reads from user input
+ * to generate an empty file with the given name.
+ *
+ * Jakob Ledig & Florian Nehmer, 6.4.2017
+ * Praktikum Betriebssysteme SS2017 Gruppe 4
+ *
+ * Best compile using the following command:
+ * gcc -g -Wall -Wextra -pedantic-errors mkfile.c -o build/mkfile
+ */
 
 #include <stdio.h>
 #include <string.h>
+#include <fcntl.h>
+#include <zconf.h>
 
-int main (int argc, char *argv[]){
-  char input[30];
-  
-  if (argc == 2){
-    printf("argument was: %s\n", argv[1]);
-    strcpy(input, argv[1]);
-    if (strlen(argv[1]) > 30) {
-      printf("Argument too long!");
+
+int main(int argc, char *argv[]) {
+    char input[30]; // any input longer than 30 characters will be truncated.
+    int fd; // filedescriptor, takes the return code of the creat-statement
+
+    // read an optional command line parameter:
+    if (argc == 2) {
+        strcpy(input, argv[1]);
+        printf("Name der neuen Datei: %s\n", input);
+    } else {
+        printf("Name der neuen Datei:\n");
+        fgets(input, 31, stdin);
+        // remove the newline at the end of input:
+        input[strlen(input) - 1] = '\0';
     }
-  }
-  else {
-    scanf("Enter the file name: %s", input);
-    
-  }
-  return 0;
+
+    // taken from creat's manpage:
+    mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
+    fd = creat(input, mode);
+    close(fd);
+    return fd;
 }
