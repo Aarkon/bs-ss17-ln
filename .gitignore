@@ -37,3 +37,5 @@ local.properties
 *.log
 *.aux
 *.synctex.gz
+
+*.c~
