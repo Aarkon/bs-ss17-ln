@@ -1,16 +1,22 @@
 #!/bin/bash
-
+#
+# A script that checks if a host is up or not.
+#
+# Jakob Ledig, Florian Nehmer, 5.4.2016
+# Praktikum Betriebssysteme SS2017, Gruppe 4
+#
 #--------------------------------------main------------------------------------#
 #
 
 if [ $1 == "-h" ]; then
-    echo "This cli-tool is an interface to the ping program."
-    echo "Parameter list:"
-    echo "-h: Display this help message"
-    echo "-s \$number \$host: ping host at a certain interval"
-    echo ""
-    echo "Example usage:"
-    echo "try_host.sh -s 5 www.google.de"
+    echo "
+    This cli-tool is an interface to the ping program.
+    Parameter list:
+    -h: Display this help message
+    -s \$number \$host: ping host at a certain interval
+
+    Example usage:
+    try_host.sh -s 5 www.google.de"
 
   elif [ $1 == "-s" ]; then
       echo "Pinging in intervals..."
