@@ -22,7 +22,30 @@ Jakob Ledig}
 \section{Bash}
 
 \subsection{„Erste Erfahrungen mit der Bash“}
-Hier folgt ein kleiner Abriss über die wichtigen Kommandos
+\begin{itemize}
+	\item strg-C: Läuft kein Programm, geschieht nichts.
+	\item cat: Gibt den Inhalt der Datei aus, auch Binärdateien
+	\item cd: Der Name des Verzeichnisses, in das gewechselt wird, steht nach dem Wechsel auch vor dem Cursor.
+	\item chmod: kann Rechte auch oktal (z.B. „0866“) entgegen nehmen, potentiell extrem gefährlich wenn man nicht weiß was man tut (etwa beim Aufruf „chmod 000 /“).
+	\item cp: Identische, aber vom Original unabhängige Kopie entsteht am Ort des zweiten Parameters.
+	\item date: Das ausgegebene Datum wird automatisch in seiner Darstellung der gewählten Uhrzeitsnotation angepasst (z.B. WD, DD, Mon, HH:MM:SS, Zeitzone, Jahr)
+	\item df: Die Information kann per Parameter auch auf einzelne Laufwerke oder gar Ordner beschränkt werden.
+	\item echo: Schreibt auf die Kommandozeile was immer als Parameter übergeben wird, z.B. auch Variablen.
+	\item env: Ausgabe kann u.U. recht lang ausfallen, wenn viel Software Anpassungen der Umgebungsvariablen erforderlich gemacht oder selbst vorgenommen hat.
+	\item exit: Es gibt wohl wenig mehr darüber zu sagen als „das Fenster/Skript wird geschlossen/beendet“.
+	\item export: Jeder danach erzeugte Prozess hat Kenntnis von und Zugriff auf die genannte Variable.
+	\item find: Findet Dateien im Dateisystem, kann per -iname auch case-insensitiv aufgerufen werden.
+	\item grep: Mächtiges Durchsuchen mithilfe Ausdrücken auch für „gepipte“ Programmausgaben. Markiert Auffindungen rot.
+	\item ls: $\Rightarrow$ „list“et Dateien und Verzeichnisse, zeigt mit -a z.B. auch versteckte Dateien an und mit -l auch die Rechtevergabe.
+	\item man: Zeigt die sog. Manpage an, falls eine unter /usr/share/man existiert.
+	\item mkdir: Verzeichnis mit dem als Parameter übergebenen Namen entsteht, Leerzeichen müssen wie immer escaped werden.
+	\item more: Anders als less liest more die anzuzeigende (nur Text-)Datei nicht erst vollständig ein, bevor sie ausgegeben wird.
+	\item mv: Statt wie bei cp eine Kopie anzulegen, wird die angegebene Datei nicht kopiert, sondern an anderer Stelle im Verzeichnisbaum eingehängt.
+	\item PROG: Startet das angegebene Programm (falls in \$PATH verfügbar) und zeigt dessen Ausgaben in der Kommandozeile an.
+	\item ps: Zeigt alle Prozesse, die aus diesem Terminal gestartet wurden, mit ihrer PID.
+	\item pstree: Bei aufwändigen Window-Managern wie Unity ist der ausgegebene Baum nicht selten recht unübersichtlich wegen der vielen Kindprozesse.
+	\item VAR: Der hinterlegte Wert ist bis zur Neuvergabe oder Schließen der Sitzung unter dem Namen der Variable verfügbar.
+\end{itemize}
 
 \subsection{Fragen beantworten}
 \subsubsection*{Variablen}
@@ -31,11 +54,11 @@ Hier folgt ein kleiner Abriss über die wichtigen Kommandos
 \paragraph{\$UID}: Gibt die ID des aufrufenden Users aus. Wird beginnend mit 1000 numerisch fortlaufend vergeben.
 \paragraph{\$USER}: Name des aufrufenden Users.
 
-\subsubsection*{\$HOME}
+\subsubsection*{Eingabe von \$HOME}
 Der Befehl wechselt ins Homeverzeichnis des Users. Kürzer ist:
 \begin{lstlisting}[language=bash]
 	cd ~
-\end{lstlisting} .
+\end{lstlisting}
 
 \subsubsection*{Pfeilasten und STRG + D}
 $\uparrow$ geht in der Befehlshistorie rückwärts, $\downarrow$ vorwärts. STRG + D schließt das Terminal und beendet die Sitzung.
@@ -51,9 +74,13 @@ Siehe Quellcode
 Siehe Quellcode
 
 \subsection{ausführbar machen}
-chmod\footnote{Als root auszuführen, d.h. je nach Distribution entweder als Benutzer root oder mit vorangestelltem „sudo“.} +x \$Dateiname, danach ist das Skript ausführbar.
+chmod\footnote{ggf. als root auszuführen, d.h. je nach Distribution entweder als Benutzer root oder mit vorangestelltem „sudo“.} +x \$Dateiname, danach ist das Skript ausführbar.
 
-\subsubsection{\$PATH erweitern}
-Kein Plan was gemeint ist, nachfragen!
-
+\subsection{\$PATH erweitern}
+Der folgende Befehl hängt den aktuellen Pfad an PATH an, der zweite exportiert die neue Variable an alle Kindprozesse.
+\begin{lstlisting}[language=bash]
+	PATH=$PATH:$(pwd)
+	export PATH
+\end{lstlisting}
+Der Vorgang ist jedoch nicht persistent.
 \end{document}

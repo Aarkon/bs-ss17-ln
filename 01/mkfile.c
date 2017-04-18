@@ -16,26 +16,30 @@
 
 
 int main(int argc, char *argv[]) {
-    char input[30]; // any input longer than 30 characters will be truncated.
-    int fd; // filedescriptor, takes the return code of the creat-statement
+    char input[30]; /* any input longer than 30 characters will be truncated. */
+    int fd; /* filedescriptor, takes the return code of the creat-statement */
+    mode_t mode;
 
-    // read an optional command line parameter:
+    /* read an optional command line parameter: */
     if (argc == 2) {
         strcpy(input, argv[1]);
         printf("Name der neuen Datei: %s\n", input);
     } else {
         printf("Name der neuen Datei: ");
         fgets(input, 31, stdin);
-        // remove the newline at the end of input:
+        /* remove the newline at the end of input: */
         input[strlen(input) - 1] = '\0';
     }
 
-    // taken from creat's manpage:
-    mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
-    //TODO: implement 0700-user access
+    /* taken from creat's manpage: */
+    mode = S_IRWXU;
     fd = creat(input, mode);
-    //TODO: implement error message
-    printf("Die Datei %s wurde erfolgreich angelegt!\n", input);
+    if (fd < 0) {
+        /* a return value of -1 for creat tells us that an error has happened, says the manpage. */
+        printf("Ein Fehler ist aufgetreten!");
+    } else {
+        printf("Die Datei %s wurde erfolgreich angelegt!\n", input);
+    }
     close(fd);
     return fd;
 }
