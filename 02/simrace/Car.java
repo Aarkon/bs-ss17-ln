@@ -1,7 +1,6 @@
-package src;
-
 /**
- * Created by jakob on 03.05.17.
+ * Class for the cars represented by threads that shall race each other.
+ * Jakob Ledig & Florian Nehmer, 3.5.2017
  */
 public class Car {
 }

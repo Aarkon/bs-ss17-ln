@@ -46,3 +46,6 @@ local.properties
 CMakeLists\.txt
 
 cmake-build-debug/
+*.iml
+*.ipr
+*.iws
