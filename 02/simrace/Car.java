@@ -2,41 +2,35 @@ import java.util.Random;
 
 /**
  * Class for the cars represented by threads that shall race each other.
- * Jakob Ledig & Florian Nehmer, 3.5.2017
+ * Jakob Ledig & Florian Nehmer, 4.5.2017
  */
-public class Car implements Runnable {
-    private int number;
-    private int lapTime;
-    private int raceTime = 0;
-    private Random random;
+public class Car extends Thread {
+    int number;
+    int raceTime = 0;
+    int laps = 0;
+    private Random random = new Random();
 
     public Car(int number) {
         this.number = number;
     }
 
-    /**
-     * Rolls and returns a value between 0 and 100 as a lap time.
-     * @return lapTime
-     */
-    int newLap() {
-        lapTime = random.nextInt(100);
+    @Override
+    public synchronized void start() {
+        System.out.println(this.number);
+        long lapTime = nextLap();
+        try {
+            sleep(lapTime);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        // super.start();
+    }
+
+    private long nextLap() {
+        laps++;
+        long lapTime = random.nextInt(100);
+        System.out.println("Car " + this.number + ": " + lapTime);
         raceTime += lapTime;
         return lapTime;
-    }
-    @Override
-    public void run() {
-
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public int getLapTime() {
-        return lapTime;
-    }
-
-    public int getRaceTime() {
-        return raceTime;
     }
 }

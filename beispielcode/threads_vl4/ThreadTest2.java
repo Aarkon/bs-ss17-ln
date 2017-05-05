@@ -1,7 +1,7 @@
 package threads_vl4;/* ThreadTest2.java
  Version 1.0
- Autor: M. H?bner
- Zweck: Beispiel f?r die nicht sinnvolle Verwendung der stop-Methode
+ Autor: M. Hübner
+ Zweck: Beispiel für die nicht sinnvolle Verwendung der stop-Methode
  */
 
 public class ThreadTest2 {
@@ -9,7 +9,7 @@ public class ThreadTest2 {
         MyThread2 testThread = new MyThread2();
         testThread.start();
         try {
-      /* F?r 2000 ms anhalten */
+      /* Für 2000 ms anhalten */
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             // nichts
@@ -20,7 +20,7 @@ public class ThreadTest2 {
 }
 
 class MyThread2 extends Thread {
-    /* Hochz?hlen und Zahlen ausgeben */
+    /* Hochzählen und Zahlen ausgeben */
     public void run() {
         int i = 0;
         while (true) {

@@ -49,3 +49,4 @@ cmake-build-debug/
 *.iml
 *.ipr
 *.iws
+02/out/

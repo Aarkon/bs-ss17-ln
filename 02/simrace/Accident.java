@@ -1,5 +1,5 @@
 /**
- * Created by jakob on 04.05.17.
+ * Jakob Ledig & Florian Nehmer, 4.5.2017
  */
 public class Accident {
 }
