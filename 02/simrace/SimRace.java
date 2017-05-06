@@ -14,15 +14,18 @@ public class SimRace {
         for (int i = 1; i <= CARS; i++) {
             cars.add(new Car(i));
         }
+        // Parameterize the creation to make the accident happening more or less likely:
+        Accident accident = new Accident();
 
         // Start threads:
         for (Car car : cars) {
             car.start();
         }
+        accident.start();
 
         // Wait for cars to finish
         boolean finished = false;
-        while (!finished) {
+        while (!finished && !Accident.happened) {
             finished = true;
             for (Car car : cars) {
                 if (car.laps < LAPS) {
@@ -30,7 +33,11 @@ public class SimRace {
                 }
             }
         }
-        report(cars);
+        if (finished) {
+            report(cars);
+        } else {
+            System.out.println("Ein Crash ist geschehen!");
+        }
     }
 
     private static void report(List<Car> cars) {

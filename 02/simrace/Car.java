@@ -16,7 +16,8 @@ public class Car extends Thread implements Comparable {
 
     @Override
     public synchronized void run() {
-        while (laps < SimRace.LAPS) {
+        // The cars ony go the given number of laps and instantly stop if an accident has happened:
+        while (laps < SimRace.LAPS && !Accident.happened) {
             long lapTime = nextLap();
             try {
                 sleep(lapTime);
@@ -29,11 +30,20 @@ public class Car extends Thread implements Comparable {
     private long nextLap() {
         laps++;
         long lapTime = random.nextInt(100);
-        System.out.println("Car " + this.number + ": " + lapTime);
+        // Uncomment this line to see instant updates for every lap and every car:
+        // System.out.println("Car " + this.number + ": " + lapTime);
         raceTime += lapTime;
         return lapTime;
     }
 
+    /**
+     * A little comfort for sorting the cars in the list representing the race outcome:
+     * This method will compare two cars concerning their total race time, thus making any collection holding cars
+     * sortable by their race time.
+     *
+     * @param o The other object (preferably of type car) to compare it's race time to.
+     * @return The difference between the car's and the other's race time.
+     */
     @Override
     public int compareTo(Object o) {
         Car other = (Car) o;
