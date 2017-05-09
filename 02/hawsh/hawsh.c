@@ -11,8 +11,54 @@
 
 
 #include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 
-int main(int argc, char *argv[]){
-    printf("Hello World!\n");
+/* ..:: FUNCTION DECLARATIONS ::.. */
+void shell_loop();
+
+void type_prompt();
+
+void read_command(char, char);
+
+/* ..:: MAIN ::.. */
+int main(int argc, char **argv[]) {
+    while (true) {
+        type_prompt();
+//        read_command(&command, &params);
+//
+//        PIDstatus = fork();
+//        if (PIDstatus < 0) {
+//            printf("Unable to fork");
+//            continue;
+//        }
+//        if (PIDstatus > 0) {
+//            waitpid(PIDstatus, &status, 0);
+//        } else {
+//            execve(command, params, 0);
+//        }
+    }
 }
+
+
+/**
+ * Print the Prompt String:
+ * "username@cwd >"
+ *
+ */
+void type_prompt() {
+        printf("%s@", getenv("USERNAME"));
+        printf("%s", getenv("PWD"));
+        printf(" > \n"); // Leerzeile entfernen!
+        sleep(2);
+
+}
+
+
+//void read_command(*char command, *char params)
+//{
+//
+//}
+
