@@ -11,54 +11,67 @@
 
 
 #include <stdio.h>
+#include <string.h>
 #include <stdbool.h>
-#include <stdlib.h>
 #include <unistd.h>
-
-
-/* ..:: FUNCTION DECLARATIONS ::.. */
-void shell_loop();
-
-void type_prompt();
-
-void read_command(char, char);
-
-/* ..:: MAIN ::.. */
-int main(int argc, char **argv[]) {
-    while (true) {
-        type_prompt();
-//        read_command(&command, &params);
-//
-//        PIDstatus = fork();
-//        if (PIDstatus < 0) {
-//            printf("Unable to fork");
-//            continue;
-//        }
-//        if (PIDstatus > 0) {
-//            waitpid(PIDstatus, &status, 0);
-//        } else {
-//            execve(command, params, 0);
-//        }
-    }
-}
+#include <stdlib.h>
 
 
 /**
  * Print the Prompt String:
- * "username@cwd >"
+ * "usint read_command(char);ername@cwd >"
  *
  */
 void type_prompt() {
-        printf("%s@", getenv("USERNAME"));
-        printf("%s", getenv("PWD"));
-        printf(" > \n"); // Leerzeile entfernen!
-        sleep(2);
-
+    char cwd[256];
+    getcwd(cwd, sizeof(cwd));
+    printf("%s@%s > ", getenv("USERNAME"), cwd);
 }
 
 
-//void read_command(*char command, *char params)
-//{
-//
-//}
+/**
+ *
+ * @param command
+ * @return
+ */
+int read_command(char *command) {
+    fgets(command, 128, stdin);
+    command[strlen(command) - 1] = '\0';
+    if (command[strlen(command) - 1] == '&') {
+        command[strlen(command) - 1] = '\0';
+        return 1;
+    } else {
+        return 0;
+    }
+}
 
+
+
+/**
+ * Main function
+ * @param argc
+ * @param argv
+ * @return
+ */
+int main(int argc, char **argv[]) {
+    int PIDstatus;
+    int command_in_background = 0;
+    char command[128];
+
+    while (true) {
+        type_prompt();
+        read_command(&command);
+
+        if (strcmp(command, "help") == 0) {
+            printf("Execute help function\n");
+        } else if (strcmp(command, "version") == 0) {
+            printf("Execute version function\n");
+        } else if (strcmp(command, "quit") == 0) {
+            exit(EXIT_SUCCESS);
+        } else if (strncmp(command, "/", 1) == 0) {
+            printf("Execute cd function\n");
+        } else {
+            printf("Execute execlp and check if run in background");
+        }
+    }
+}
