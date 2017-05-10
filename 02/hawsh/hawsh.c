@@ -99,7 +99,7 @@ int main(int argc, char **argv[]) {
                 continue;
             }
             if(PIDstatus > 0){
-                if(command_in_background){
+                if(command_in_background==0){
                     waitpid(PIDstatus, &status, 0);
                 }
             } else {
