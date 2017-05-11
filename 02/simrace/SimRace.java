@@ -14,7 +14,7 @@ public class SimRace {
         for (int i = 1; i <= CARS; i++) {
             cars.add(new Car(i));
         }
-        // Parameterize the creation to make the accident happening more or less likely:
+        // Parameterise the creation to make the accident happening more or less likely:
         Accident accident = new Accident();
 
         // Start threads:

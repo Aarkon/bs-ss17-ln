@@ -16,7 +16,7 @@ public class Car extends Thread implements Comparable<Car> {
 
     @Override
     public synchronized void run() {
-        // The cars ony go the given number of laps and instantly stop if an accident has happened:
+        // The cars only go the given number of laps and instantly stop if an accident has happened:
         while (laps < SimRace.LAPS && !Accident.happened) {
             long lapTime = nextLap();
             try {
