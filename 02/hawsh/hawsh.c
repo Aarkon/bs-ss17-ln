@@ -99,11 +99,16 @@ int main(int argc, char **argv[]) {
                 continue;
             }
             if(PIDstatus > 0){
-                if(command_in_background){
+                if(command_in_background==0){
                     waitpid(PIDstatus, &status, 0);
                 }
             } else {
-                execlp(command, command, NULL);
+                int returnVal = 0;
+                returnVal = execlp(command, command, NULL);
+                if(returnVal == -1)
+                {
+                    printf("unknown command\n");
+                }
             }
         }
     }
