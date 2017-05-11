@@ -107,7 +107,7 @@ int main(int argc, char **argv[]) {
                 returnVal = execlp(command, command, NULL);
                 if(returnVal == -1)
                 {
-                    printf("execution failure, command will not get executed\n");
+                    printf("unknown command\n");
                 }
             }
         }
