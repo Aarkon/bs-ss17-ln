@@ -4,7 +4,7 @@ import java.util.Random;
  * Class for the cars represented by threads that shall race each other.
  * Jakob Ledig & Florian Nehmer, 4.5.2017
  */
-public class Car extends Thread implements Comparable {
+public class Car extends Thread implements Comparable<Car> {
     int number;
     int raceTime = 0;
     int laps = 0;
@@ -45,8 +45,7 @@ public class Car extends Thread implements Comparable {
      * @return The difference between the car's and the other's race time.
      */
     @Override
-    public int compareTo(Object o) {
-        Car other = (Car) o;
+    public int compareTo(Car other) {
         return this.raceTime - other.raceTime;
     }
 }

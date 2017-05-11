@@ -40,8 +40,6 @@ public class SimRace {
         }
     }
 
-    // We can do this because we type check in method signature
-    @SuppressWarnings("unchecked")
 	private static void report(List<Car> cars) {
         Collections.sort(cars);
         System.out.println("**** Endstand ****");
