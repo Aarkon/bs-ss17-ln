@@ -17,7 +17,6 @@
 #include <stdlib.h>
 #include <wait.h>
 
-
 /**
  * Prints the Prompt String
  */
@@ -60,7 +59,7 @@ void usage() {
  * Prints version info
  */
 void version() {
-    printf("1.0");
+    printf("1.0\n");
 }
 
 
@@ -70,8 +69,8 @@ void version() {
  * @param argv
  * @return
  */
-int main(int argc, char **argv[]) {
-    int PIDstatus;
+int main(int argc, char *argv[]) {
+//    int PIDstatus;
 
     int command_in_background = 0;
     int status = 0;
@@ -79,7 +78,7 @@ int main(int argc, char **argv[]) {
 
     while (true) {
         type_prompt();
-        command_in_background=read_command(&command);
+        command_in_background=read_command(command);
 
         if (strcmp(command, "help") == 0) {
             usage();
@@ -95,7 +94,7 @@ int main(int argc, char **argv[]) {
         } else {
             int PIDstatus = fork();
             if (PIDstatus < 0){
-                printf("Unable to fork");
+                printf("Unable to fork\n");
                 continue;
             }
             if(PIDstatus > 0){
@@ -105,10 +104,13 @@ int main(int argc, char **argv[]) {
             } else {
                 int returnVal = 0;
                 returnVal = execlp(command, command, NULL);
+
                 if(returnVal == -1)
                 {
                     printf("unknown command\n");
+                    exit(0);
                 }
+
             }
         }
     }
