@@ -1,4 +1,4 @@
-package sst;
+package rps;
 
 /**
  * Created by jakob on 16.05.17.
