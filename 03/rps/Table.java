@@ -10,7 +10,7 @@ public class Table {
     // Stores the choice of a player at the index of its number. E.G. player 0's choice will be found at index 0.
     List<RPSType> items;
 
-    Table() {
+    public Table() {
         // Considered not to be a magic number because Rock Paper Scissor with more than two players is unheard of.
         items = new ArrayList<>(2);
     }

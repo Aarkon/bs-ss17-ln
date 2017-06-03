@@ -22,13 +22,12 @@ public class Referee extends Thread {
         RPSType fromPlayer0 = table.items.get(0);
         RPSType fromPlayer1 = table.items.get(1);
         this.notifyAll();
-        switch (fromPlayer0.beats(fromPlayer1)) {
-            case 1:
-                return player0;
-            case -1:
-                return player1;
-            default:
-                return null;
+        if (player0.beats(player1) == 1) {
+            return player0;
+        } else if (player0.beats(player1) == -1) {
+            return player1;
+        } else {
+            return null;
         }
     }
 }

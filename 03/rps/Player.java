@@ -10,10 +10,11 @@ public class Player extends Thread {
 
     /**
      * Player representation.
+     *
      * @param table
      * @param number When creating players, be sure only to use 0 and 1.
      */
-    Player(Table table, int number) {
+    public Player(Table table, int number) {
         this.table = table;
         this.number = number;
     }
@@ -25,14 +26,6 @@ public class Player extends Thread {
         }
         table.add(rps, this.number);
         this.notifyAll();
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public RPSType getRPS() {
-        return rps;
     }
 
     /**
@@ -70,5 +63,17 @@ public class Player extends Thread {
             default:
                 return 0;
         }
+    }
+
+    public void setRPS(RPSType rps) {
+        this.rps = rps;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public RPSType getRPS() {
+        return rps;
     }
 }
