@@ -31,7 +31,12 @@ public class Referee extends Thread {
         }
     }
 
-    public void startSession() {
+    public void startSession() throws InterruptedException {
+        player0.play();
+        player1.play();
+        while (!interrupted()) {
+
+        }
 
     }
 }

@@ -16,15 +16,10 @@ public class RPSRunner {
     private static Countdown countdown = new Countdown(TIME);
 
     public static void main(String[] args) throws InterruptedException {
+        countdown.go();
         referee.startSession();
-    }
-
-    private static void round() throws InterruptedException {
-        roundCount++;
-        System.out.println(roundCount);
-        player0.play();
-        player1.play();
-        referee.judge();
+        while (countdown.getTime() > 0) ;
+        referee.interrupt();
     }
 
     private static void evaluate() {
