@@ -7,14 +7,14 @@ import java.util.TimerTask;
  * Simple concurrent countdown that takes time in milliseconds as a parameter.
  * The remaining time can be retrieved by the getter on the field.
  */
-class Countdown {
+public class Countdown {
     private int time;
 
-    Countdown(int time) {
+    public Countdown(int time) {
         this.time = time;
     }
 
-    void go() {
+    public void go() {
         final Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
@@ -25,7 +25,7 @@ class Countdown {
         }, 0, 1);
     }
 
-    int getTime() {
+    public int getTime() {
         return time;
     }
 }
