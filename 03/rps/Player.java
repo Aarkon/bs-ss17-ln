@@ -21,7 +21,7 @@ public class Player extends Thread {
 
     synchronized void play() throws InterruptedException {
         rps = RPSType.randomRockPaperScissor();
-        while (table.full()) {
+        while (table.getRPS(number) != null) {
             this.wait();
         }
         table.add(rps, this.number);

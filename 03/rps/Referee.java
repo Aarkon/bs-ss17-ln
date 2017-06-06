@@ -1,18 +1,24 @@
 package rps;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Administrates a game of Rock Paper Scissor by taking the role of the consumer in a monitor controlled
  * producer-consumer scenario.
  */
 public class Referee extends Thread {
+    private Map<String, Integer> results;
     private Table table;
-    private final Player player0;
-    private final Player player1;
+    private Player player0;
+    private Player player1;
 
     Referee(Table table, Player player0, Player player1) {
         this.table = table;
         this.player0 = player0;
         this.player1 = player1;
+
+        results = new HashMap<>();
     }
 
     synchronized Player judge() throws InterruptedException {
