@@ -1,4 +1,4 @@
-package rps;
+package rps.synchronizedthreads;
 
 import java.util.Arrays;
 import java.util.Collections;

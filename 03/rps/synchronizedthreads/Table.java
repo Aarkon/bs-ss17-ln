@@ -1,4 +1,4 @@
-package rps;
+package rps.synchronizedthreads;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +14,7 @@ public class Table {
 
 	public Table() {
 		items = new ArrayList<>(PLAYERCOUNT);
-		// initialize the list so it actually has the fields we are later
-		// accessing:
+		// initialize the list so it has the fields we are later accessing:
 		for (int i = 0; i < PLAYERCOUNT; i++) {
 			items.add(null);
 		}
@@ -28,7 +27,7 @@ public class Table {
 	 *            The Rock Paper Scissor-Representation
 	 */
 	public void add(RPSType rps, int playerNumber) {
-		System.out.println("got " + rps.toString() + " from player " + playerNumber);
+		// System.out.println("got " + rps.toString() + " from player " + playerNumber);
 		items.set(playerNumber, rps);
 	}
 
@@ -37,15 +36,9 @@ public class Table {
 	 *
 	 * @return True if the table has results for both players, false if not.
 	 */
-	public boolean full(Referee referee) {
-		synchronized (referee) {
-			if (items.get(1) != null && items.get(0) != null) {
-				referee.notify();
-				return true;
-			} else {
-				return false;
-			}
-		}
+	public boolean full() {
+		System.out.println("table full queried");
+		return (items.get(1) != null && items.get(0) != null);
 	}
 
 	public void clear() {

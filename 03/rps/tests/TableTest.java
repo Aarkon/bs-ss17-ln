@@ -3,10 +3,10 @@ package rps.tests;
 import org.junit.Before;
 import org.junit.Test;
 
-import rps.Player;
-import rps.RPSType;
-import rps.Referee;
-import rps.Table;
+import rps.synchronizedthreads.RPSType;
+import rps.synchronizedthreads.Referee;
+import rps.synchronizedthreads.Table;
+import rps.synchronizedthreads.Player;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -35,7 +35,7 @@ public class TableTest {
 	public void full() throws Exception {
 		table0.add(RPSType.PAPER, 0);
 		table0.add(RPSType.ROCK, 1);
-		assertThat(table0.full(referee), is(true));
+		assertThat(table0.full(), is(true));
 	}
 
 	@Test
@@ -43,7 +43,7 @@ public class TableTest {
 		table0.add(RPSType.PAPER, 0);
 		table0.add(RPSType.ROCK, 1);
 		table0.clear();
-		assertThat(table0.full(referee), is(false));
+		assertThat(table0.full(), is(false));
 	}
 
 }
