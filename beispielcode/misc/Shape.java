@@ -1,4 +1,4 @@
-package misc.rockPaperScissors;
+package misc;
 
 public enum Shape {
 	ROCK, PAPER, SCISSOR

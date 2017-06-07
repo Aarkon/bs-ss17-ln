@@ -1,4 +1,4 @@
-package misc.rockPaperScissors;
+package misc;
 
 import java.io.IOException;
 import java.util.ArrayList;

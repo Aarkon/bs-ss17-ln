@@ -14,7 +14,7 @@ public enum RPSType {
     private static final List<RPSType> VALUES = Collections.unmodifiableList(Arrays.asList(values()));
     private static final Random RANDOM = new Random();
 
-    static RPSType randomRockPaperScissor() {
+    public static RPSType randomRockPaperScissor() {
         return VALUES.get(RANDOM.nextInt(VALUES.size()));
     }
 }

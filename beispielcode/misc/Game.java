@@ -1,4 +1,4 @@
-package misc.rockPaperScissors;
+package misc;
 
 import java.util.ArrayList;
 import java.util.List;

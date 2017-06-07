@@ -1,22 +1,28 @@
-package rps.synchronizedthreads;
+package rps.locksconditions;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.ReentrantLock;
 
-/**
- * Administrates a game of Rock Paper Scissor by taking the role of the consumer
- * in a monitor controlled producer-consumer scenario.
- */
-public class Referee extends Thread {
+import rps.synchronizedthreads.RPSType;
+import rps.synchronizedthreads.Table;
+
+public class RefereeLC extends Thread {
+
+	private ReentrantLock lock;
+	private List<Thread> schedule;
+	private Table table;
+	private PlayerLC player0;
+	private PlayerLC player1;
 	protected Map<String, Integer> results;
-	protected Table table;
-	protected Player player0;
-	protected Player player1;
 
-	public Referee(Table table, Player player0, Player player1) {
+	public RefereeLC(Table table, PlayerLC player0, PlayerLC player1, ReentrantLock lock, List<Thread> schedule) {
 		this.table = table;
 		this.player0 = player0;
 		this.player1 = player1;
+		this.lock = lock;
+		this.schedule = schedule;
 
 		results = new HashMap<>();
 		results.put("Player0 wins: ", 0);
@@ -27,31 +33,16 @@ public class Referee extends Thread {
 
 	@Override
 	public void run() {
-		player0.start();
-		player1.start();
-		while (!isInterrupted() && !player0.isInterrupted() && !player1.isInterrupted()) {
-			playRound();
-		}
-		player0.interrupt();
-		player1.interrupt();
-	}
-
-	private void playRound() {
-		synchronized (player0) {
-			try {
-				player0.wait();
-			} catch (InterruptedException e) {
-				player0.interrupt();
+		while (!isInterrupted()) {
+			if (schedule.get(0) == this) {
+				lock.lock();
+				// reschedule all tokens but the just used one:
+				schedule.add(schedule.remove(0));
+				judge();
+				lock.unlock();
 			}
 		}
-		synchronized (player1) {
-			try {
-				player1.wait();
-			} catch (InterruptedException e) {
-				player1.interrupt();
-			}
-		}
-		judge();
+		
 	}
 
 	private void judge() {
@@ -69,12 +60,6 @@ public class Referee extends Thread {
 		int roundsPlayed = results.get("Rounds played: ") + 1;
 		results.put("Rounds played: ", roundsPlayed);
 		table.clear();
-		synchronized (player0) {
-			player0.notify();
-		}
-		synchronized (player1) {
-			player1.notify();
-		}
 	}
 
 	/**

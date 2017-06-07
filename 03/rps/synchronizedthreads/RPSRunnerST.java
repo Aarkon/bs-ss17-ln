@@ -3,7 +3,7 @@ package rps.synchronizedthreads;
 /**
  * Main Class to start the Rock Paper Scissors game.
  */
-public class RPSRunner extends Thread {
+public class RPSRunnerST extends Thread {
 	// Time in milliseconds:
 	private static final int TIME = 10000;
 

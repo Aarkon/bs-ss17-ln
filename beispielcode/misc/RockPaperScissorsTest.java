@@ -1,4 +1,4 @@
-package misc.rockPaperScissors;
+package misc;
 
 import org.junit.Test;
 
