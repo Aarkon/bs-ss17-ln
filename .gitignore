@@ -50,3 +50,5 @@ cmake-build-debug/
 *.ipr
 *.iws
 02/out/
+/.classpath
+/.project
