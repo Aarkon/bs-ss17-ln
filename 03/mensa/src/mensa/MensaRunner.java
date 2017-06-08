@@ -8,7 +8,7 @@ public class MensaRunner {
 	public static void main(String[] args) {
 
 		// The time students are able to use the mensa
-		int runtimeMillis = 3000;
+		int runtimeMillis = 10000;
 
 		// The amount of cash registers in the mensa
 		int amountCashRegisters = 3;
