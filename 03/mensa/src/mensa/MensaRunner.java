@@ -8,7 +8,7 @@ public class MensaRunner {
 	public static void main(String[] args) {
 
 		// The time students are able to use the mensa
-		int runtimeMilis = 3000;
+		int runtimeMillis = 3000;
 
 		// The amount of cash registers in the mensa
 		int amountCashRegisters = 3;
@@ -39,7 +39,7 @@ public class MensaRunner {
 		jonas.start();
 
 		try {
-			Thread.sleep(runtimeMilis);
+			Thread.sleep(runtimeMillis);
 			anton.interrupt();
 			bert.interrupt();
 			chris.interrupt();
