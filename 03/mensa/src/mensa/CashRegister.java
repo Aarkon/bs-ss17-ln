@@ -26,7 +26,7 @@ public class CashRegister {
      * Payment process of a student, which takes a random amount of time, defined by the field maxPayTimeMillis.
      * @param student The student who is paying
      */
-    void pay(Student student) {
+    public void pay(Student student) {
         try {
             System.out.println(student.getStudentName() + " hat sich an " + name + " angestellt.");
             queue.acquire(); // Kassenressource wird belegt

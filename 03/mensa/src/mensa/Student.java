@@ -10,7 +10,7 @@ public class Student extends Thread {
     private final Mensa mensa;
 
     /**
-     * Instanciates a student.
+     * Instances a student.
      * @param name The name of the studnet
      * @param mensa The mensa the student is visiting
      */
@@ -63,7 +63,7 @@ public class Student extends Thread {
      * This method simulates the eating process of a student and prints a message to the console,
      * whenever the student has finished eating
      */
-    void eat() {
+    private void eat() {
         try {
             int maxEatTimeMilis = 500;
             Random ran = new Random();
