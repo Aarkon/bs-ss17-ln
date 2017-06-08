@@ -1,17 +1,21 @@
 package mensa;
 
 /**
- * Created by jakob on 16.05.17.
+ * This class sets up and starts the whole mensa simulation.
  */
 public class MensaRunner {
 
 	public static void main(String[] args) {
 
+		// The time students are able to use the mensa
 		int runtimeMilis = 3000;
+
+		// The amount of cash registers in the mensa
 		int amountCashRegisters = 3;
 
 		Mensa mensa = new Mensa(amountCashRegisters);
 
+		// 10 Students
 		Student anton = new Student("Anton", mensa);
 		Student bert = new Student("Bert", mensa);
 		Student chris = new Student("Chris", mensa);
@@ -47,7 +51,7 @@ public class MensaRunner {
 			ilya.interrupt();
 			jonas.interrupt();
 		} catch (InterruptedException e) {
-			System.err.println("Main-Thread got interupted during sleep time!");
+			System.err.println("Main-Thread got interrupted during sleep time!");
 		}
 	}
 	
