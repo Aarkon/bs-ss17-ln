@@ -28,7 +28,7 @@ public class PlayerLC extends Thread {
 				// reschedule all tokens but the just used one:
 				schedule.add(schedule.remove(0));
 				table.add(RPSType.randomRockPaperScissor(), this.number);
-				lock.lock();
+				lock.unlock();
 			}
 		}
 	}

@@ -20,9 +20,9 @@ public class RPSRunnerLC extends Thread {
 		schedule.add(player0);
 		schedule.add(player1);
 		schedule.add(referee);
-		for (Thread thread : schedule) {
-			thread.start();
-		}
+		player0.start();
+		player1.start();
+		referee.start();
 
 		try {
 			sleep(TIME);
@@ -30,9 +30,9 @@ public class RPSRunnerLC extends Thread {
 			e.printStackTrace();
 		}
 
-		for (Thread thread : schedule) {
-			thread.interrupt();
-		}
+		player0.interrupt();
+		player1.interrupt();
+		referee.interrupt();
 		evaluate();
 	}
 
