@@ -5,7 +5,7 @@ package rps.synchronizedthreads;
  */
 public class RPSRunnerST extends Thread {
 	// Time in milliseconds:
-	private static final int TIME = 10000;
+	private static final int TIME = 1000;
 
 	private static Table table = new Table();
 	private static Player player0 = new Player(table, 0);
