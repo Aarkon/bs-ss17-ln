@@ -8,6 +8,7 @@ public class Player extends Thread {
 	private RPSType rps;
 	private Table table;
 	private int number;
+	private Referee referee;
 
 	/**
 	 * Player representation.
@@ -24,10 +25,18 @@ public class Player extends Thread {
 	@Override
 	public void run() {
 		while (!isInterrupted()) {
+			synchronized (this) {
+				try {
+					wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 			rps = RPSType.randomRockPaperScissor();
 			table.add(rps, number);
-			synchronized (this) {
-				notify();
+			System.out.println("player" + number + " plays " + rps.toString());
+			if (table.full()) {
+				referee.notify();
 			}
 		}
 	}
@@ -42,5 +51,9 @@ public class Player extends Thread {
 
 	public RPSType getRPS() {
 		return rps;
+	}
+
+	public void setReferee(Referee referee) {
+		this.referee = referee;
 	}
 }

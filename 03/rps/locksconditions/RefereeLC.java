@@ -46,7 +46,7 @@ public class RefereeLC extends Thread {
 	}
 
 	private void judge() {
-		// System.out.println("judge is judging: " + beats());
+		 System.out.println("judge is judging: " + beats());
 		if (beats() == 1) {
 			int wins = results.get("Player0 wins: ") + 1;
 			results.put("Player0 wins: ", wins);

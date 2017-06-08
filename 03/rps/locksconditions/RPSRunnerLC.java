@@ -10,7 +10,7 @@ public class RPSRunnerLC extends Thread {
 	private static List<Thread> schedule = new ArrayList<>();
 	private static ReentrantLock lock = new ReentrantLock();
 
-	private final static int TIME = 1000;
+	private final static int TIME = 10;
 	static Table table = new Table();
 	static PlayerLC player0 = new PlayerLC(table, 0, lock, schedule);
 	static PlayerLC player1 = new PlayerLC(table, 1, lock, schedule);

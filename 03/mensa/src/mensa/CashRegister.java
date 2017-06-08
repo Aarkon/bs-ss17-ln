@@ -11,7 +11,7 @@ public class CashRegister {
     private final String name;
     private Semaphore queue;
     private int maxPayTimeMillis = 1000;
-    private int queueLength = 0;
+    private  int queueLength = 0;
 
     /**
      * Instanciates a new cash register
@@ -62,16 +62,16 @@ public class CashRegister {
     /**
      * method to increment the queue length by 1.
      */
-    public void incrementQueueLength()
+    public synchronized void incrementQueueLength(Student student)
     {
-        queueLength += 1;
+			queueLength += 1;       
     }
 
     /**
      * method to decrement the queue length by 1.
      */
-    public void decrementQueueLength()
+    public synchronized void decrementQueueLength(Student student)
     {
-        queueLength -= 1;
+			queueLength -= 1;
     }
 }

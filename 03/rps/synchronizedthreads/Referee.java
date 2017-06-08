@@ -27,6 +27,7 @@ public class Referee extends Thread {
 
 	@Override
 	public void run() {
+		// TODO make this shit work!!!
 		player0.start();
 		player1.start();
 		while (!isInterrupted() && !player0.isInterrupted() && !player1.isInterrupted()) {
@@ -38,24 +39,24 @@ public class Referee extends Thread {
 
 	private void playRound() {
 		synchronized (player0) {
-			try {
-				player0.wait();
-			} catch (InterruptedException e) {
-				player0.interrupt();
-			}
+			player0.notify();
 		}
 		synchronized (player1) {
-			try {
-				player1.wait();
-			} catch (InterruptedException e) {
-				player1.interrupt();
-			}
+			player1.notify();
 		}
 		judge();
+		synchronized (this){
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private void judge() {
-		// System.out.println("judge is judging: " + beats());
+		 System.out.println("judge is judging: " + beats());
 		if (beats() == 1) {
 			int wins = results.get("Player0 wins: ") + 1;
 			results.put("Player0 wins: ", wins);

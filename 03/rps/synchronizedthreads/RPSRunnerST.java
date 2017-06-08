@@ -13,6 +13,8 @@ public class RPSRunnerST extends Thread {
 	private static Referee referee = new Referee(table, player0, player1);
 
 	public static void main(String[] args) throws InterruptedException {
+		player0.setReferee(referee);
+		player1.setReferee(referee);
 		referee.start();
 		sleep(TIME);
 		referee.interrupt();

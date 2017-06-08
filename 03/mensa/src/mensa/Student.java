@@ -2,12 +2,16 @@ package mensa;
 
 import java.util.Random;
 
+import javax.swing.text.StyledEditorKit.ForegroundAction;
+
 /**
  * This class models student who visit a mensa to buy and consume food.
  */
 public class Student extends Thread {
     private final String name;
     private final Mensa mensa;
+    private final int foodChooseTime = 500;
+    private final int maxEatTimeMilis = 500;
 
     /**
      * Instances a student.
@@ -33,7 +37,8 @@ public class Student extends Thread {
                 min = cr;
             }
         }
-        min.incrementQueueLength();
+        //TODO queue schützen
+        min.incrementQueueLength(this);
         return min;
     }
 
@@ -53,10 +58,12 @@ public class Student extends Thread {
             chooseFood();
             CashRegister currentCR = chooseRegister(mensa);
             currentCR.pay(this);
-            currentCR.decrementQueueLength();
+            //TODO
+            currentCR.decrementQueueLength(this);
             System.out.println(name + " hat an " + currentCR.getName() + " bezahlt.");
             eat();
         }
+        System.out.println(name + " hat die Mensa verlassen");
     }
 
     /**
@@ -65,7 +72,6 @@ public class Student extends Thread {
      */
     private void eat() {
         try {
-            int maxEatTimeMilis = 500;
             Random ran = new Random();
             Thread.sleep(ran.nextInt(maxEatTimeMilis));
             System.out.println(name + " hat gegessen.");
@@ -84,7 +90,7 @@ public class Student extends Thread {
         Random ran = new Random();
 
         try {
-            Thread.sleep(ran.nextInt(500));
+            Thread.sleep(ran.nextInt(foodChooseTime));
         } catch (InterruptedException e) {
             this.interrupt();
         }
