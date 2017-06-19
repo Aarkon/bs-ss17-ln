@@ -50,3 +50,5 @@ cmake-build-debug/
 *.ipr
 *.iws
 02/out/
+
+out/production/bs-ss17-ln/mensa/\.project
