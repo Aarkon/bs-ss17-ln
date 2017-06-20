@@ -23,8 +23,7 @@ public class OperatingSystem {
 	 * implementiert ist!): (ein Teil des Hauptspeichers muss immer frei bleiben
 	 * (u.a. f�r Caching etc.), daher -PAGE_SIZE)
 	 */
-	private int MAX_NUM_OF_PROCESSES = (RAM_SIZE - PAGE_SIZE)
-			/ (MAX_RAM_PAGES_PER_PROCESS * PAGE_SIZE);
+	private int MAX_NUM_OF_PROCESSES = (RAM_SIZE - PAGE_SIZE) / (MAX_RAM_PAGES_PER_PROCESS * PAGE_SIZE);
 
 	/**
 	 * Dieser Faktor bestimmt das "Lokalit�tsverhalten" eines Programms (=
@@ -193,15 +192,13 @@ public class OperatingSystem {
 		// Speicherbelegung durch write - Operationen
 		int item; // Dummy
 
-		for (int virtAdr = 0; virtAdr < processSize; virtAdr = virtAdr
-				+ getWORD_SIZE()) {
+		for (int virtAdr = 0; virtAdr < processSize; virtAdr = virtAdr + getWORD_SIZE()) {
 			// Zu schreibendes Datenwort bestimmen
 			item = (int) (Math.pow(2, 31) * Math.random());
 			// System Call
 			write(pid, virtAdr, item);
 		}
-		System.out.println("Prozess " + pid + ": " + processSize + " Byte ("
-				+ processSize / getPAGE_SIZE()
+		System.out.println("Prozess " + pid + ": " + processSize + " Byte (" + processSize / getPAGE_SIZE()
 				+ " Seiten) in den Speicher geladen!");
 		// Statistikz�hler neu initialisieren
 		eventLog.resetCounter();
@@ -243,25 +240,22 @@ public class OperatingSystem {
 
 		// �bergebene Adresse pr�fen
 		if ((virtAdr < 0) || (virtAdr > VIRT_ADR_SPACE - WORD_SIZE)) {
-			System.err.println("OS: write ERROR " + pid + ": Adresse "
-					+ virtAdr
-					+ " liegt au�erhalb des virtuellen Adressraums 0 - "
-					+ VIRT_ADR_SPACE);
+			System.err.println("OS: write ERROR " + pid + ": Adresse " + virtAdr
+					+ " liegt au�erhalb des virtuellen Adressraums 0 - " + VIRT_ADR_SPACE);
 			return -1;
 		}
 		// Seitenadresse berechnen
 		virtualPageNum = getVirtualPageNum(virtAdr);
 		offset = getOffset(virtAdr);
-		testOut("OS: write " + pid + " " + virtAdr + " " + item
-				+ " +++ Seitennr.: " + virtualPageNum + " Offset: " + offset);
+		testOut("OS: write " + pid + " " + virtAdr + " " + item + " +++ Seitennr.: " + virtualPageNum + " Offset: "
+				+ offset);
 
 		// Seite in Seitentabelle referenzieren
 		proc = getProcess(pid);
 		pte = proc.pageTable.getPte(virtualPageNum);
 		if (pte == null) {
 			// Seite nicht vorhanden:
-			testOut("OS: write " + pid + " +++ Seitennr.: " + virtualPageNum
-					+ " in Seitentabelle nicht vorhanden");
+			testOut("OS: write " + pid + " +++ Seitennr.: " + virtualPageNum + " in Seitentabelle nicht vorhanden");
 			pte = new PageTableEntry();
 			pte.virtPageNum = virtualPageNum;
 			// Seitenrahmen im RAM f�r die neue Seite anfordern und reale
@@ -270,8 +264,7 @@ public class OperatingSystem {
 			pte.valid = true;
 			// neue Seite in Seitentabelle eintragen
 			proc.pageTable.addEntry(pte);
-			testOut("OS: write " + pid + " Neue Seite " + virtualPageNum
-					+ " in Seitentabelle eingetragen! RAM-Adr.: "
+			testOut("OS: write " + pid + " Neue Seite " + virtualPageNum + " in Seitentabelle eingetragen! RAM-Adr.: "
 					+ pte.realPageFrameAdr);
 		} else {
 			// Seite vorhanden: Seite valid (im RAM)?
@@ -286,8 +279,7 @@ public class OperatingSystem {
 		realAddressOfItem = pte.realPageFrameAdr + offset;
 		// Datenwort in RAM eintragen
 		writeToRAM(realAddressOfItem, item);
-		testOut("OS: write " + pid + " +++ item: " + item
-				+ " erfolgreich an virt. Adresse " + virtAdr
+		testOut("OS: write " + pid + " +++ item: " + item + " erfolgreich an virt. Adresse " + virtAdr
 				+ " geschrieben! RAM-Adresse: " + realAddressOfItem + " \n");
 		// Seitentabelle bzgl. Zugriffshistorie aktualisieren
 		pte.referenced = true;
@@ -308,20 +300,35 @@ public class OperatingSystem {
 	 */
 	public synchronized int read(int pid, int virtAdr) {
 		// Aufgabe 2
-		
-		Process process = getProcess(pid);
-		int vpn = getVirtualPageNum(virtAdr);
-		
-		int phyAdr = process.pageTable.getPte(vpn).realPageFrameAdr;
-		
-		eventLog.incrementReadAccesses();
-		
-		if(!isValidAddress(pid, virtAdr)){
+		int virtualPageNum; // Virtuelle Seitennummer
+		int offset; // Offset innerhalb der Seite
+		int realAddressOfItem; // Reale Adresse des Datenworts
+		Process proc; // Aktuelles Prozessobjekt
+		PageTableEntry pte; // Eintrag f�r die zu schreibende Seite
+
+		// �bergebene Adresse pr�fen
+		if ((virtAdr < 0) || (virtAdr > VIRT_ADR_SPACE - WORD_SIZE)) {
+			System.err.println("OS: read ERROR " + pid + ": Adresse " + virtAdr
+					+ " liegt au�erhalb des virtuellen Adressraums 0 - " + VIRT_ADR_SPACE);
 			return -1;
 		}
-		return readFromRAM(phyAdr);
-		
-	
+		// Seitenadresse berechnen
+		virtualPageNum = getVirtualPageNum(virtAdr);
+		offset = getOffset(virtAdr);
+		testOut("OS: read " + pid + " " + virtAdr + " +++ Seitennr.: " + virtualPageNum + " Offset: " + offset);
+
+		// Seite in Seitentabelle referenzieren
+		proc = getProcess(pid);
+		pte = proc.pageTable.getPte(virtualPageNum);
+		if (pte == null || !pte.valid) {
+			pte = handlePageFault(pte, pid);
+		}
+		int phyAddr = proc.pageTable.getPte(virtualPageNum).realPageFrameAdr;
+		if (!isValidAddress(pid, virtAdr)) {
+			return -1;
+		} else {
+			return readFromRAM(phyAddr);
+		}
 	}
 
 	// --------------- Private Methoden des Betriebssystems
@@ -342,7 +349,7 @@ public class OperatingSystem {
 	 */
 	private int getVirtualPageNum(int virtAdr) {
 		// Aufgabe 1
-		return (virtAdr/PAGE_SIZE);
+		return (virtAdr / PAGE_SIZE);
 	}
 
 	/**
@@ -379,8 +386,8 @@ public class OperatingSystem {
 		// Seitentabelle aktualisieren
 		pte.realPageFrameAdr = newPageFrameAdr;
 		pte.valid = true;
-		testOut("OS: " + pid + " +++ Seite " + pte.virtPageNum
-				+ " ist wieder im RAM mit Startadresse " + pte.realPageFrameAdr);
+		testOut("OS: " + pid + " +++ Seite " + pte.virtPageNum + " ist wieder im RAM mit Startadresse "
+				+ pte.realPageFrameAdr);
 
 		return pte;
 	}
@@ -421,8 +428,8 @@ public class OperatingSystem {
 			proc.pageTable.pteRAMlistInsert(newPte);
 		} else {
 			// Nein, Seitenanforderung im RAM ist nicht erf�llbar:
-			testOut("OS: getNewRAMPage " + pid + " ++ Seitenfehler f�r Seite "
-					+ newPte.virtPageNum + " --> Seitenersetzungs-Algorithmus!");
+			testOut("OS: getNewRAMPage " + pid + " ++ Seitenfehler f�r Seite " + newPte.virtPageNum
+					+ " --> Seitenersetzungs-Algorithmus!");
 			// eine alte Seite zur Verdr�ngung ausw�hlen -->
 			// Seitenersetzungs-Algorithmus
 			replacePte = proc.pageTable.selectNextRAMpteAndReplace(newPte);
@@ -438,10 +445,8 @@ public class OperatingSystem {
 			replacePte.realPageFrameAdr = newDiskBlock;
 			replacePte.valid = false;
 
-			testOut("OS: getNewRAMPage " + pid + " ++ Seite "
-					+ replacePte.virtPageNum
-					+ " ist nun auf der Platte an Adresse "
-					+ replacePte.realPageFrameAdr);
+			testOut("OS: getNewRAMPage " + pid + " ++ Seite " + replacePte.virtPageNum
+					+ " ist nun auf der Platte an Adresse " + replacePte.realPageFrameAdr);
 			// Adresse als neue Seite zur�ckgeben
 			newPageFrameAdr = replacePageFrameAdr;
 		}
@@ -542,8 +547,7 @@ public class OperatingSystem {
 			ramFB.setAdress(freePageAdr + PAGE_SIZE);
 			ramFB.setSize(ramFB.getSize() - PAGE_SIZE);
 		}
-		testOut("OS: Neuer Seitenrahmen (RAM page) belegt, Adresse: "
-				+ freePageAdr);
+		testOut("OS: Neuer Seitenrahmen (RAM page) belegt, Adresse: " + freePageAdr);
 		testOut("OS: ramFreeList:" + ramFreeList);
 		return freePageAdr;
 	}
@@ -575,8 +579,7 @@ public class OperatingSystem {
 		ramFB = new FreeListBlock(ramAdr, PAGE_SIZE);
 		ramFreeList.add(ramFB);
 		Collections.sort(ramFreeList);
-		testOut("OS: Seitenrahmen (RAM page) wurde freigegeben, Adresse "
-				+ ramAdr);
+		testOut("OS: Seitenrahmen (RAM page) wurde freigegeben, Adresse " + ramAdr);
 		testOut("OS: ramFreeList:" + ramFreeList);
 	}
 
@@ -663,10 +666,9 @@ public class OperatingSystem {
 		i = Math.max(1, i);
 		i = Math.min(i, MAX_NO_OF_PAGES);
 		MAX_RAM_PAGES_PER_PROCESS = i;
-		MAX_NUM_OF_PROCESSES = (RAM_SIZE - PAGE_SIZE)
-				/ (MAX_RAM_PAGES_PER_PROCESS * PAGE_SIZE);
-		testOut("OS: MAX_RAM_PAGES_PER_PROCESS: " + MAX_RAM_PAGES_PER_PROCESS
-				+ " MAX_NUM_OF_PROCESSES:" + MAX_NUM_OF_PROCESSES);
+		MAX_NUM_OF_PROCESSES = (RAM_SIZE - PAGE_SIZE) / (MAX_RAM_PAGES_PER_PROCESS * PAGE_SIZE);
+		testOut("OS: MAX_RAM_PAGES_PER_PROCESS: " + MAX_RAM_PAGES_PER_PROCESS + " MAX_NUM_OF_PROCESSES:"
+				+ MAX_NUM_OF_PROCESSES);
 	}
 
 	/**
@@ -747,8 +749,7 @@ public class OperatingSystem {
 	 * @param alg
 	 *            Enum-Wert ImplementedReplacementAlgorithms
 	 */
-	public synchronized void setREPLACEMENT_ALGORITHM(
-			ImplementedReplacementAlgorithms alg) {
+	public synchronized void setREPLACEMENT_ALGORITHM(ImplementedReplacementAlgorithms alg) {
 		replacementAlgorithm = alg;
 	}
 
@@ -778,15 +779,13 @@ public class OperatingSystem {
 			System.err.println(ausgabe);
 		}
 	}
-	
+
 	private boolean isValidAddress(int pid, int virtAdr) {
-        if ((virtAdr < 0) || (virtAdr > VIRT_ADR_SPACE - WORD_SIZE)) {
-            System.err.println("OS: write ERROR " + pid + ": Adresse "
-                + virtAdr
-                + " liegt au�erhalb des virtuellen Adressraums 0 - "
-                + VIRT_ADR_SPACE);
-            return false;
-        }
-        return true;
-    }
+		if ((virtAdr < 0) || (virtAdr > VIRT_ADR_SPACE - WORD_SIZE)) {
+			System.err.println("OS: write ERROR " + pid + ": Adresse " + virtAdr
+					+ " liegt au�erhalb des virtuellen Adressraums 0 - " + VIRT_ADR_SPACE);
+			return false;
+		}
+		return true;
+	}
 }
