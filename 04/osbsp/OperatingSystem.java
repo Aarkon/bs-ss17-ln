@@ -316,6 +316,9 @@ public class OperatingSystem {
 		
 		eventLog.incrementReadAccesses();
 		
+		if(!isValidAddress(pid, virtAdr)){
+			return -1;
+		}
 		return readFromRAM(phyAdr);
 		
 	
@@ -775,4 +778,15 @@ public class OperatingSystem {
 			System.err.println(ausgabe);
 		}
 	}
+	
+	private boolean isValidAddress(int pid, int virtAdr) {
+        if ((virtAdr < 0) || (virtAdr > VIRT_ADR_SPACE - WORD_SIZE)) {
+            System.err.println("OS: write ERROR " + pid + ": Adresse "
+                + virtAdr
+                + " liegt au�erhalb des virtuellen Adressraums 0 - "
+                + VIRT_ADR_SPACE);
+            return false;
+        }
+        return true;
+    }
 }

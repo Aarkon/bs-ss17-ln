@@ -44,9 +44,9 @@ public class SimulationEnv {
 		simulationTime = 200;
 		// max. Anzahl Seiten pro Prozess im Hauptspeicher (sonst Verdr�ngung
 		// eigener Seiten)
-		os.setMAX_RAM_PAGES_PER_PROCESS(1);
+		os.setMAX_RAM_PAGES_PER_PROCESS(10);
 		// CLOCK oder FIFO oder RANDOM
-		os.setREPLACEMENT_ALGORITHM(OperatingSystem.ImplementedReplacementAlgorithms.FIFO);
+		os.setREPLACEMENT_ALGORITHM(OperatingSystem.ImplementedReplacementAlgorithms.RANDOM);
 		// Anzahl Operationen innerhalb eines Seitenbereichs
 		os.setDEFAULT_LOCALITY_FACTOR(1);
 
