@@ -158,9 +158,12 @@ public class PageTable {
 	 * RANDOM-Algorithmus: Zuf�llige Auswahl
 	 */
 	private PageTableEntry randomAlgorithm(PageTableEntry newPte) {
-		// TODO
-		return null;
-		// return pte;
+		// TODO Aufgabe 3
+		Random r = new Random();
+		int randomIndex = r.nextInt(pteRAMlist.size());
+		PageTableEntry output = pteRAMlist.get(randomIndex);
+		pteRAMlist.set(randomIndex, newPte);
+		return output;
 	}
 
 	// ----------------------- Hilfsmethode --------------------------------

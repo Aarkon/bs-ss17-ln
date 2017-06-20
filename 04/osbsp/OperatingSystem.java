@@ -307,8 +307,18 @@ public class OperatingSystem {
 	 *         Zugriffsfehler
 	 */
 	public synchronized int read(int pid, int virtAdr) {
-	// TODO
-		return 0;
+		// Aufgabe 2
+		
+		Process process = getProcess(pid);
+		int vpn = getVirtualPageNum(virtAdr);
+		
+		int phyAdr = process.pageTable.getPte(vpn).realPageFrameAdr;
+		
+		eventLog.incrementReadAccesses();
+		
+		return readFromRAM(phyAdr);
+		
+	
 	}
 
 	// --------------- Private Methoden des Betriebssystems
@@ -328,8 +338,8 @@ public class OperatingSystem {
 	 * @return Die entsprechende virtuelle Seitennummer
 	 */
 	private int getVirtualPageNum(int virtAdr) {
-		// TODO
-		return 0;
+		// Aufgabe 1
+		return (virtAdr/PAGE_SIZE);
 	}
 
 	/**
@@ -338,8 +348,8 @@ public class OperatingSystem {
 	 * @return Den entsprechenden Offset zur Berechnung der realen Adresse
 	 */
 	private int getOffset(int virtAdr) {
-		// TODO
-		return 0;
+		// Aufgabe 1
+		return (virtAdr % PAGE_SIZE);
 	}
 
 	/**
