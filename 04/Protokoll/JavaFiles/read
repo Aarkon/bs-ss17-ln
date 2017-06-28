@@ -1,0 +1,52 @@
+/**
+ * Datenwort von einer Adresse im virtuellen Speicher lesen
+ * 
+ * @param pid
+ *            Prozess-ID
+ * @param virtAdr
+ *            virtuelle Adresse
+ * @return Datenwort auf logischer Adresse virtAdr oder -1 bei
+ *         Zugriffsfehler
+ */
+public synchronized int read(int pid, int virtAdr) {
+	Process process;
+	int virtPageNum;
+	int offset;
+	PageTableEntry pte;
+
+	process = getProcess(pid);
+	virtPageNum = getVirtualPageNum(virtAdr);
+	offset = getOffset(virtPageNum);
+
+	// Uebergebene Adresse pruefen
+	if ((virtAdr < 0) || (virtAdr > VIRT_ADR_SPACE - WORD_SIZE)) {
+		System.err.println("OS: read ERROR " + pid + ": Adresse " + virtAdr
+				+ " liegt ausserhalb des virtuellen Adressraums 0 - " + VIRT_ADR_SPACE);
+		return -1;
+	}
+	// Seitenadresse berechnen
+	virtPageNum = getVirtualPageNum(virtAdr);
+	offset = getOffset(virtAdr);
+	testOut("OS: read " + pid + " " + virtAdr + " " + " +++ Seitennr.: " + virtPageNum + " Offset: " + offset);
+
+	// Seite in Seitentabelle referenzieren
+	pte = process.pageTable.getPte(virtPageNum);
+	if (pte == null) {
+		// Seite nicht vorhanden:
+		testOut("OS: read " + pid + " +++ Seitennr.: " + virtPageNum + " in Seitentabelle nicht vorhanden");
+	} else {
+		// Seite vorhanden: Seite valid (im RAM)?
+		if (!pte.valid) {
+			// Seite nicht valid (also auf Platte --> Seitenfehler):
+			pte = handlePageFault(pte, pid);
+		}
+	}
+
+	// Seitentabelle bzgl. Zugriffshistorie aktualisieren
+	pte.referenced = true;
+
+	// Statistische Z�hlung
+	eventLog.incrementReadAccesses();
+
+	return pte.realPageFrameAdr;
+}

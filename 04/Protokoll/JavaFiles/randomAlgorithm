@@ -1,0 +1,10 @@
+/**
+ * RANDOM-Algorithmus: Zufällige Auswahl
+ */
+private PageTableEntry randomAlgorithm(PageTableEntry newPte) {
+	Random r = new Random();
+	int randomIndex = r.nextInt(pteRAMlist.size());
+	PageTableEntry output = pteRAMlist.get(randomIndex);
+	pteRAMlist.set(randomIndex, newPte);
+	return output;
+}

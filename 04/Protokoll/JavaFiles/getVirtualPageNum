@@ -1,0 +1,7 @@
+/**
+ * @param virtAdr: eine virtuelle Adresse
+ * @return Die entsprechende virtuelle Seitennummer
+ */
+private int getVirtualPageNum(int virtAdr) {
+	return (virtAdr / PAGE_SIZE);
+}

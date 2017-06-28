@@ -1,0 +1,97 @@
+\documentclass[]{scrartcl}
+\usepackage[latin1]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+\usepackage [ pst ]{ xcolor }
+\usepackage{minted}
+\usepackage{textcomp}
+
+\begin{document}
+\setlength{\parindent}{0em} 
+
+\lstdefinestyle{customc}{
+	belowcaptionskip=1\baselineskip,
+	breaklines=true,
+	frame=L,
+	tabsize=4,
+	xleftmargin=\parindent,
+	language=Bash,
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily,
+	keywordstyle=\color{green!40!black},
+	commentstyle=\color{orange!40!black},
+	identifierstyle=\color{blue},
+	stringstyle=\color{orange},
+}
+
+\lstset{escapechar=@,style=customc}
+
+%opening
+\title{Virtueller Speicher}
+\author{Florian Nehmer\\ 
+	Jakob Ledig}
+
+
+
+\maketitle
+
+\section{Code erg\"anzen}
+
+\subsection{Erg\"anzen Sie den Code f\"ur die Methode getVirtualPageNum(int)}
+
+\inputminted[linenos,frame=lines,fontsize=\scriptsize]{Java}{JavaFiles/getVirtualPageNum}
+
+
+\subsection{Erg\"anzen Sie den Code f\"ur die Methode getOffset(int)}
+\inputminted[linenos,frame=lines,fontsize=\scriptsize]{Java}{JavaFiles/getOffset}
+
+
+\subsection{Erg\"anzen Sie den Code f\"ur die Methode read(int, int)}
+\inputminted[linenos,frame=lines,fontsize=\scriptsize]{Java}{JavaFiles/read}
+
+
+\subsection{Erg\"anzen Sie den Code f\"ur die Methode randomAlgorithm(PageTableEntry)}
+\inputminted[linenos,frame=lines,fontsize=\scriptsize]{Java}{JavaFiles/randomAlgorithm}
+
+\section{Simulation}
+
+\subsection{Daten}
+
+\begin{table}[h]
+	\centering
+	\caption{My caption}
+	\label{my-label}
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		\textbf{\begin{tabular}[c]{@{}c@{}}MAX\_RAM\_PAGES\_\\ PER\_PROCESS\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}DEFAULT\_\\ LOCALITY\_FACTOR\end{tabular}} & \textbf{RANDOM} & \textbf{CLOCK} & \textbf{FIFO} \\ \hline
+		10 & 1 & 0,499 & 0,498 & 0,500 \\ \hline
+		10 & 10 & 0,229 & 0,210 & 0,219 \\ \hline
+		10 & 100 & 0,031 & 0,025 & 0,027 \\ \hline
+		10 & 1000 & 0,00325 & 0,00254 & 0,00279 \\ \hline
+		15 & 10 & 0,1119 & 0,1068 & 0,1128 \\ \hline
+		20 & 10 & 0 & 0 & 0 \\ \hline
+	\end{tabular}
+\end{table}
+
+
+\subsection{Fragen}
+\paragraph{a)}: \textbf{Ist der Wert bei absolut zuf\"alligen Zugriffsfolgen (Lokalit\"atsfaktor = 1) Ihrer Ansicht nach plausibel? Wenn ja, aufgrund welcher \"uberlegung?}
+
+\textbf{Tipp: Ber\"ucksichtigen Sie die Hauptspeicherzuteilung und die Programmgr\"o\ss{}e!}
+
+\vspace{1em}
+Bei 20 Seiten, wovon 10 im RAM sind ist die Chance bei komplett zuf\"alligen Zugriffen 50\% eine Seite im RAM zu treffen. Daher ist der Wert plausibel.
+
+\paragraph{b)}:
+\textbf{In welcher Gr\"o\ss{}enordnung liegt (bei diesem einfachen Simulationsmodell) der Leistungsunterschied zwischen CLOCK-, FIFO- und RANDOM-Algorithmus (in \%)?}
+
+\vspace{1em}
+Der Gr\"o\ss{}enunterschied ist sehr gering. Nur der Random ist immer ein wenig schlechter mit einem Unterschied von im Schnitt 13 \%, wobei der Unterschied tendenziell h\"oher ist, wenn der Lokalit\"atsfaktor h\"oher ist.
+
+\paragraph{c)}:
+\textbf{Welche Ma\ss{}nahme zur Leistungssteigerung Ihres Computers k\"onnen Sie ergreifen, wenn Sie gro\ss{}e Programme mit schlechtem Lokalit\"atsverhalten ablaufen lassen wollen?}
+
+\vspace{1em}
+Man sollte in diesem Fall den RAM erweitern, da die Algorithmen bei ineffizienten Lokalit\"atsverhalten kaum einen Unterschied machen. Mit mehr RAM kann man einfach mehr in den Hauptspeicher laden und muss weniger auslagern.
+
+\end{document}

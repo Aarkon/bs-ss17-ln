@@ -110,8 +110,7 @@ public class PageTable {
 		PageTableEntry pte; // Auswahl
 
 		pte = (PageTableEntry) pteRAMlist.getFirst();
-		os.testOut("Prozess " + pid + ": FIFO-Algorithmus hat pte ausgew�hlt: "
-				+ pte.virtPageNum);
+		os.testOut("Prozess " + pid + ": FIFO-Algorithmus hat pte ausgew�hlt: " + pte.virtPageNum);
 		pteRAMlist.removeFirst();
 		pteRAMlist.add(newPte);
 		return pte;
@@ -134,8 +133,8 @@ public class PageTable {
 		while (pte.referenced == true) {
 			// Seite wurde referenziert, also nicht ausw�hlen, sondern R-Bit
 			// zur�cksetzen
-			os.testOut("Prozess " + pid + ": CLOCK-Algorithmus! --- pte.vpn: "
-					+ pte.virtPageNum + " ref: " + pte.referenced);
+			os.testOut("Prozess " + pid + ": CLOCK-Algorithmus! --- pte.vpn: " + pte.virtPageNum + " ref: "
+					+ pte.referenced);
 			pte.referenced = false;
 			incrementPteRAMlistIndex();
 			pte = (PageTableEntry) pteRAMlist.get(pteRAMlistIndex);
@@ -147,8 +146,7 @@ public class PageTable {
 		pteRAMlist.add(pteRAMlistIndex, newPte);
 		// Index auf Nachfolger setzen
 		incrementPteRAMlistIndex();
-		os.testOut("Prozess " + pid
-				+ ": CLOCK-Algorithmus hat pte ausgew�hlt: " + pte.virtPageNum
+		os.testOut("Prozess " + pid + ": CLOCK-Algorithmus hat pte ausgew�hlt: " + pte.virtPageNum
 				+ "  Neuer pteRAMlistIndex ist " + pteRAMlistIndex);
 
 		return pte;

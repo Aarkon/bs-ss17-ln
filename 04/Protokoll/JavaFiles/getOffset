@@ -1,0 +1,8 @@
+/**
+ * @param virtAdr
+ *            : eine virtuelle Adresse
+ * @return Den entsprechenden Offset zur Berechnung der realen Adresse
+ */
+private int getOffset(int virtAdr) {
+	return (virtAdr % PAGE_SIZE);
+}
