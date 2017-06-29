@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
 import rps.synchronizedthreads.RPSType;
-import rps.synchronizedthreads.Table;
 
 public class PlayerLC extends Thread {
 

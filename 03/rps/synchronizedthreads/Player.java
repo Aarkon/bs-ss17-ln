@@ -6,7 +6,7 @@ package rps.synchronizedthreads;
  */
 public class Player extends Thread {
 	private RPSType rps;
-	private Table table;
+	private TableST table;
 	private int number;
 	private Referee referee;
 
@@ -17,7 +17,7 @@ public class Player extends Thread {
 	 * @param number
 	 *            When creating players, be sure only to use 0 and 1.
 	 */
-	public Player(Table table, int number) {
+	public Player(TableST table, int number) {
 		this.table = table;
 		this.number = number;
 	}
@@ -27,9 +27,12 @@ public class Player extends Thread {
 		System.out.println("player" + number + " starts playing");
 		while (!isInterrupted()) {
 			rps = RPSType.randomRockPaperScissor();
-			table.add(rps, number);
 			System.out.println("player" + number + " plays " + rps.toString());
-			referee.playRound();
+			try {
+				table.add(rps, number);
+			} catch (InterruptedException e) {
+				this.interrupt();
+			}
 		}
 	}
 

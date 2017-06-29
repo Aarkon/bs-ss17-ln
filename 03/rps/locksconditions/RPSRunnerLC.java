@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
-import rps.synchronizedthreads.Table;
 
 public class RPSRunnerLC extends Thread {
 	private static List<Thread> schedule = new ArrayList<>();

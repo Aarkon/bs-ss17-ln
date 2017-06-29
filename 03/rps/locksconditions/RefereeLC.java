@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
 import rps.synchronizedthreads.RPSType;
-import rps.synchronizedthreads.Table;
 
 public class RefereeLC extends Thread {
 

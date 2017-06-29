@@ -1,7 +1,9 @@
-package rps.synchronizedthreads;
+package rps.locksconditions;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import rps.synchronizedthreads.RPSType;
 
 /**
  * The Buffer in the monitor controlled producer-consumer scenario.

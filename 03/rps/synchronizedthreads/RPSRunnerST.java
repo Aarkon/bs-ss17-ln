@@ -5,9 +5,9 @@ package rps.synchronizedthreads;
  */
 public class RPSRunnerST extends Thread {
 	// Time in milliseconds:
-	private static final int TIME = 3000;
+	private static final int TIME = 10;
 
-	private static Table table = new Table();
+	private static TableST table = new TableST();
 	private static Player player0 = new Player(table, 0);
 	private static Player player1 = new Player(table, 1);
 	private static Referee referee = new Referee(table, player0, player1);
@@ -17,9 +17,12 @@ public class RPSRunnerST extends Thread {
 		player1.setReferee(referee);
 		player0.start();
 		player1.start();
+		referee.start();
 		sleep(TIME);
 		player0.interrupt();
 		player1.interrupt();
+		referee.interrupt();
+		referee.join();
 		evaluate();
 	}
 
