@@ -5,6 +5,8 @@
 \usepackage [ pst ]{ xcolor }
 \usepackage{minted}
 \usepackage{textcomp}
+\usepackage{amsmath}
+\usepackage{amssymb}
 
 \begin{document}
 \setlength{\parindent}{0em} 
@@ -39,14 +41,27 @@
 
 \subsection{Erg\"anzen Sie den Code f\"ur die Methode getVirtualPageNum(int)}
 
+$Virtuelle Seitennummer = floor (virtuelle Adresse/Seitengroesse)$
+
+(siehe Kap. 4, Folie 29)
+
 \inputminted[linenos,frame=lines,fontsize=\scriptsize]{Java}{JavaFiles/getVirtualPageNum}
 
 
 \subsection{Erg\"anzen Sie den Code f\"ur die Methode getOffset(int)}
+
+$Offset = VirtuelleAdresse \bmod Seitengroesse$
+
+(siehe Kap. 4, Folie 29)
+
 \inputminted[linenos,frame=lines,fontsize=\scriptsize]{Java}{JavaFiles/getOffset}
 
+\newpage
 
 \subsection{Erg\"anzen Sie den Code f\"ur die Methode read(int, int)}
+
+Für die Implmentierung der Methode $read(int, int)$ haben wir uns an der vorhandenen Methode $write(int, int, int)$ orientiert.
+
 \inputminted[linenos,frame=lines,fontsize=\scriptsize]{Java}{JavaFiles/read}
 
 
